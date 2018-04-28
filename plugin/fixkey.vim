@@ -2,10 +2,10 @@
 
 " Distributed under Vim's |license|; see |fixkey.txt| for details.
 
-if exists("loaded_fixkey")
+if exists("g:loaded_fixkey")
     finish
 endif
-let loaded_fixkey = 1
+let g:loaded_fixkey = 1
 
 " No need to map keys for gvim.
 if has("gui_running")
@@ -22,7 +22,11 @@ if &ttimeoutlen < 0
 endif
 
 function! Fixkey_setKey(key, keyCode)
-    execute "set " . a:key . "=" . a:keyCode
+    try
+        execute "set " . a:key . "=" . a:keyCode
+    catch /E518/
+        " Ignore unknown keys.
+    endtry
 endfunction
 
 function! Fixkey_mapKey(key, value)
